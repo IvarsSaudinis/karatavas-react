@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  width: 600px;
+  margin: 0 auto;
 }
 
 .App-logo {
@@ -35,4 +37,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.key-highlight {
+  color: #8b8d36
+}
+
+.key-disabled {
+  color: #CCC
 }
