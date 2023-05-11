@@ -5,4 +5,4 @@ palūdz saģenerēt frāzes spēlei.
 
 Karātavu vizuālo daļu izveidoja Kristers.
  
-Veidots React, hostēts Vercel platformā - karatavas.ivars.lv 
+Veidots React, hostēts bez maksas Vercel platformā - [karatavas.ivars.lv](https://karatavas.ivars.lv)  vai [karatavas-react.vercel.app](https://karatavas-react.vercel.app)
