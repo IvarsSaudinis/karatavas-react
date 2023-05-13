@@ -109,17 +109,17 @@ class Karatavas extends Component {
             default: [
               "Q W E R T Y U I O P {bksp}",
               "{shift} A S D F G H J K L",
-              "Z X C V B N M {enter}",
+              "Z X C V B N M {info}",
             ],
             shift: [
               "Q W Ē R T Y Ū Ī O P {bksp}",
               "{shift} Ā Š D F Ģ H J Ķ Ļ",
-              "Ž X Č V B Ņ M {enter}",
+              "Ž X Č V B Ņ M {info}",
             ],
           }}
           display={{
             "{bksp}": "DZĒST",
-            "{enter}": "APSTIRPINĀT",
+            "{info}": "&#2139;",
             "{shift}": "a..ā",
           }}
         />
