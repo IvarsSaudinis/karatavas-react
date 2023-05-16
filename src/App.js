@@ -91,38 +91,40 @@ class Karatavas extends Component {
           usedLetters={this.state.usedLetters}
         />
         <Divider />
-        <Keyboard
-          onKeyPress={this.onKeyPress}
-          //  onChange={this.onChange}
-          layoutName={this.state.layoutName}
-          buttonTheme={[
-            {
-              class: "key-disabled",
-              buttons: this.state.disabledButtons,
-            },
-            {
-              class: "key-highlight",
-              buttons: "{shift}",
-            },
-          ]}
-          layout={{
-            default: [
-              "Q W E R T Y U I O P {bksp}",
-              "{shift} A S D F G H J K L",
-              "Z X C V B N M {info}",
-            ],
-            shift: [
-              "Q W Ē R T Y Ū Ī O P {bksp}",
-              "{shift} Ā Š D F Ģ H J Ķ Ļ",
-              "Ž X Č V B Ņ M {info}",
-            ],
-          }}
-          display={{
-            "{bksp}": "DZĒST",
-            "{info}": "&#2139;",
-            "{shift}": "a..ā",
-          }}
-        />
+        <div className="footer">
+          <Keyboard
+            onKeyPress={this.onKeyPress}
+            //  onChange={this.onChange}
+            layoutName={this.state.layoutName}
+            buttonTheme={[
+              {
+                class: "key-disabled",
+                buttons: this.state.disabledButtons,
+              },
+              {
+                class: "key-highlight",
+                buttons: "{shift}",
+              },
+            ]}
+            layout={{
+              default: [
+                "Q W E R T Y U I O P {bksp}",
+                "{shift} A S D F G H J K L",
+                "Z X C V B N M {info}",
+              ],
+              shift: [
+                "Q W Ē R T Y Ū Ī O P {bksp}",
+                "{shift} Ā Š D F Ģ H J Ķ Ļ",
+                "Ž X Č V B Ņ M {info}",
+              ],
+            }}
+            display={{
+              "{bksp}": "DZĒST",
+              "{info}": "&#2139;",
+              "{shift}": "a..ā",
+            }}
+          />
+        </div>
       </div>
     );
   }
