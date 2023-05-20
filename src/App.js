@@ -29,6 +29,7 @@ class Karatavas extends Component {
     phrase: "",
     level: 0,
     openDrawer: false,
+    openModal: false,
   };
 
   componentDidMount() {
@@ -59,6 +60,13 @@ class Karatavas extends Component {
         openDrawer: true,
       });
     }
+
+    if (event.key === "{about}") {
+      this.setState({
+        openModal: true,
+      });
+    }
+
     if (
       alphabet.includes(event.key.toUpperCase()) &&
       !this.state.usedLetters.includes(event.key.toUpperCase())
@@ -86,6 +94,11 @@ class Karatavas extends Component {
       openDrawer: false,
     });
   };
+  handleOk = () => {
+    this.setState({
+      openModal: false,
+    });
+  };
   handleShift = () => {
     let layoutName = this.state.layoutName;
     let disabledButtons =
@@ -100,7 +113,7 @@ class Karatavas extends Component {
   };
 
   render() {
-    const { level, phrase, usedLetters, openDrawer } = this.state;
+    const { level, phrase, usedLetters, openDrawer, openModal } = this.state;
     return (
       <div className="App">
         <Gallows level={level} />
@@ -128,18 +141,18 @@ class Karatavas extends Component {
             ]}
             layout={{
               default: [
-                "Q W E R T Y U I O P {bksp}",
+                "Q W E R T Y U I O P {about}",
                 "{shift} A S D F G H J K L",
                 "Z X C V B N M {info}",
               ],
               shift: [
-                "Q W Ē R T Y Ū Ī O P {bksp}",
+                "Q W Ē R T Y Ū Ī O P {about}",
                 "{shift} Ā Š D F Ģ H J Ķ Ļ",
                 "Ž X Č V B Ņ M {info}",
               ],
             }}
             display={{
-              "{bksp}": "DZĒST",
+              "{about}": "par",
               "{info}": "info",
               "{shift}": "a..ā",
             }}
@@ -158,8 +171,14 @@ class Karatavas extends Component {
           ))}
         </Drawer>
         {/*about*/}
-        <Modal title={"yolo"}>
-          <p>Some contents...</p>
+        <Modal
+          open={openModal}
+          title={"Par lietotni"}
+          onOk={this.handleOk}
+          cancelButtonProps={{ hidden: true }}
+        >
+          <p>Klasiska karātavu spēle. </p>
+          <p>Minamās frāzes prātoja ChatGTP </p>
         </Modal>
       </div>
     );
