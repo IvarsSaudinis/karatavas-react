@@ -6,12 +6,21 @@ import { Letters } from "./components/letters";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 
-import { Divider } from "antd";
+import { Divider, Drawer, Modal, Tag } from "antd";
 
 import { alphabet } from "./assets/alphabet";
 import { data } from "./assets/vocabulary";
 import "./App.css";
 
+/*
+TODO:
+- add about modal
+- add info button
+- add info modal
+- info modal has all words content
+- add wining modal
+- add words break
+*/
 class Karatavas extends Component {
   state = {
     usedLetters: [" "],
@@ -19,6 +28,7 @@ class Karatavas extends Component {
     disabledButtons: "Q W Y X",
     phrase: "",
     level: 0,
+    openDrawer: false,
   };
 
   componentDidMount() {
@@ -44,8 +54,11 @@ class Karatavas extends Component {
     // console.log('Button pressed', button)
   };
   keydownHandler = (event) => {
-    // console.log("Button pressed", event);
-
+    if (event.key === "{info}") {
+      this.setState({
+        openDrawer: true,
+      });
+    }
     if (
       alphabet.includes(event.key.toUpperCase()) &&
       !this.state.usedLetters.includes(event.key.toUpperCase())
@@ -68,6 +81,11 @@ class Karatavas extends Component {
       );
     }
   };
+  closeDrawer = () => {
+    this.setState({
+      openDrawer: false,
+    });
+  };
   handleShift = () => {
     let layoutName = this.state.layoutName;
     let disabledButtons =
@@ -82,14 +100,12 @@ class Karatavas extends Component {
   };
 
   render() {
+    const { level, phrase, usedLetters, openDrawer } = this.state;
     return (
       <div className="App">
-        <Gallows level={this.state.level} />
+        <Gallows level={level} />
         <Divider />
-        <Letters
-          phrase={this.state.phrase}
-          usedLetters={this.state.usedLetters}
-        />
+        <Letters phrase={phrase} usedLetters={usedLetters} />
         <Divider />
         <div className="footer">
           <Keyboard
@@ -104,6 +120,10 @@ class Karatavas extends Component {
               {
                 class: "key-highlight",
                 buttons: "{shift}",
+              },
+              {
+                class: "key-info",
+                buttons: "{info}",
               },
             ]}
             layout={{
@@ -120,11 +140,27 @@ class Karatavas extends Component {
             }}
             display={{
               "{bksp}": "DZĒST",
-              "{info}": "&#2139;",
+              "{info}": "info",
               "{shift}": "a..ā",
             }}
           />
         </div>
+        <Drawer
+          title="Vārdi"
+          placement="right"
+          open={openDrawer}
+          onClose={this.closeDrawer}
+        >
+          {data.vocabulary.map((i, index) => (
+            <Tag style={{ marginBottom: "4px" }} key={index}>
+              {i.phrase}
+            </Tag>
+          ))}
+        </Drawer>
+        {/*about*/}
+        <Modal title={"yolo"}>
+          <p>Some contents...</p>
+        </Modal>
       </div>
     );
   }
