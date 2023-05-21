@@ -12,15 +12,6 @@ import { alphabet } from "./assets/alphabet";
 import { data } from "./assets/vocabulary";
 import "./App.css";
 
-/*
-TODO:
-- add about modal
-- add info button
-- add info modal
-- info modal has all words content
-- add wining modal
-- add words break
-*/
 class Karatavas extends Component {
   state = {
     usedLetters: [" "],
@@ -30,6 +21,7 @@ class Karatavas extends Component {
     level: 0,
     openDrawer: false,
     openModal: false,
+    openWinningModal: false,
   };
 
   componentDidMount() {
@@ -82,6 +74,18 @@ class Karatavas extends Component {
             (letter) => this.state.phrase.indexOf(letter) === -1
           ).length;
 
+          const foundLetters = this.state.phrase.split("");
+
+          if (
+            foundLetters.every(
+              (letter) => this.state.usedLetters.includes(letter) && level < 7
+            )
+          ) {
+            this.setState({
+              openWinningModal: true,
+            });
+          }
+
           this.setState({
             level: level,
           });
@@ -97,13 +101,14 @@ class Karatavas extends Component {
   handleOk = () => {
     this.setState({
       openModal: false,
+      openWinningModal: false,
     });
   };
   handleShift = () => {
     let layoutName = this.state.layoutName;
     let disabledButtons =
-      "Q W R T Y O P D F H J Z X V B M" + this.state.usedLetters.toString();
-    let disabledButtonsShift = "Q W Y X" + this.state.usedLetters.toString();
+      "Q W R T Y O P D F H J Z X V B M" + this.state.usedLetters.join(" ");
+    let disabledButtonsShift = "Q W Y X" + this.state.usedLetters.join(" ");
 
     this.setState({
       layoutName: layoutName === "default" ? "shift" : "default",
@@ -113,7 +118,14 @@ class Karatavas extends Component {
   };
 
   render() {
-    const { level, phrase, usedLetters, openDrawer, openModal } = this.state;
+    const {
+      level,
+      phrase,
+      usedLetters,
+      openDrawer,
+      openModal,
+      openWinningModal,
+    } = this.state;
     return (
       <div className="App">
         <Gallows level={level} />
@@ -170,15 +182,47 @@ class Karatavas extends Component {
             </Tag>
           ))}
         </Drawer>
+        {/*winnind modal*/}
+        <Modal
+          title={"Apsveicu!"}
+          open={openWinningModal}
+          closable={false}
+          onOk={this.handleOk}
+          cancelButtonProps={{ hidden: true }}
+        >
+          <p>Frāze ir uzminēta!</p>
+        </Modal>
+
         {/*about*/}
         <Modal
           open={openModal}
           title={"Par lietotni"}
           onOk={this.handleOk}
+          closable={false}
           cancelButtonProps={{ hidden: true }}
         >
-          <p>Klasiska karātavu spēle. </p>
-          <p>Minamās frāzes prātoja ChatGTP </p>
+          <p>
+            <strong>Klasiska karātavu spēle.</strong>
+          </p>
+          <p>
+            Minamās frāzes prātoja ChatGPT. Karātavu dizains, konstrukcijas
+            uzbūve - Kristers
+          </p>
+          <p>
+            Kods pieejams{" "}
+            <a
+              target={"_blank"}
+              href={"https://github.com/IvarsSaudinis/karatavas-react"}
+            >
+              github
+            </a>{" "}
+            un darbojas{" "}
+            <a target={"_blank"} href={"https://vercel.com/"}>
+              {" "}
+              Vercel{" "}
+            </a>{" "}
+            platformā
+          </p>
         </Modal>
       </div>
     );
